@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <EmbeddedResource Remove="Resources\Models\Order.en.resx" />
+    <EmbeddedResource Remove="Resources\Models\Order.es.resx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Resources\Models\Order.es.resx">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\Models\Order.en.resx" />
   </ItemGroup>
 

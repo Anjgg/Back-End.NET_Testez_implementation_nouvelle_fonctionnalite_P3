@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P3AddNewFunctionalityDotNetCore.Tests", "P3AddNewFunctionalityDotNetCore.Tests\P3AddNewFunctionalityDotNetCore.Tests.csproj", "{7844011C-847B-4894-B918-5FB030BAB3DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P3AddNewFunctionalityDotNetCore", "P3AddNewFunctionalityDotNetCore\P3AddNewFunctionalityDotNetCore.csproj", "{752FB11B-71BE-4ECC-923A-997D50794E8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P3", "P3AddNewFunctionalityDotNetCore\P3.csproj", "{752FB11B-71BE-4ECC-923A-997D50794E8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
