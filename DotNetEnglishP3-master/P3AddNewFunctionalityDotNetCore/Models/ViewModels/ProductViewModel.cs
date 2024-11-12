@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.ComponentModel.DataAnnotations;
-using System.Resources;
-using System.Collections.Generic;
 using System;
-using Microsoft.AspNetCore.Mvc;
-using P3.Utility;
-using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels

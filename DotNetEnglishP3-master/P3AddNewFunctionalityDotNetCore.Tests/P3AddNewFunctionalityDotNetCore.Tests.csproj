@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\P3AddNewFunctionalityDotNetCore\P3.csproj" />
     <ProjectReference Include="..\P3AddNewFunctionalityDotNetCore\P3AddNewFunctionalityDotNetCore.csproj" />
   </ItemGroup>
 
