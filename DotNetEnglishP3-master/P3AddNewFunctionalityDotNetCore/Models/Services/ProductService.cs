@@ -84,14 +84,6 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             return products;
         }
 
-        public List<ValidationResult> CheckProductModelErrors(ProductViewModel product)
-        {
-            var modelErrors = new List<ValidationResult>();
-            var context = new ValidationContext(product);
-            Validator.TryValidateObject(product, context, modelErrors);
-            return modelErrors;
-        }
-
         public void UpdateProductQuantities()
         {
             Cart cart = (Cart) _cart;

@@ -13,7 +13,6 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         Product GetProductById(int id);
         ProductViewModel GetProductByIdViewModel(int id);
         void UpdateProductQuantities();
-        List<ValidationResult> CheckProductModelErrors(ProductViewModel product);
         void SaveProduct(ProductViewModel product);
         void DeleteProduct(int id);
         Task<Product> GetProduct(int id);
