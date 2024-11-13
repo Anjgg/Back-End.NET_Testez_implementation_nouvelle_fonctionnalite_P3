@@ -24,7 +24,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
 
 
         [Required(ErrorMessageResourceName = "MissingPrice", ErrorMessageResourceType = (typeof(P3.Resources.Models.Services.ProductService)))]
-        [RegularExpression(@"^[-]?\d*([\.]\d{2})?$", ErrorMessageResourceName = "PriceNotANumber", ErrorMessageResourceType = (typeof(P3.Resources.Models.Services.ProductService)))]
+        [RegularExpression(@"^[-]?\d*([\.]\d{1,2})?$", ErrorMessageResourceName = "PriceNotANumber", ErrorMessageResourceType = (typeof(P3.Resources.Models.Services.ProductService)))]
         [Range(0.01, 1000000.00, ErrorMessageResourceName = "PriceNotGreaterThanZero", ErrorMessageResourceType = (typeof(P3.Resources.Models.Services.ProductService)))]
         public string Price { get; set; }
     }

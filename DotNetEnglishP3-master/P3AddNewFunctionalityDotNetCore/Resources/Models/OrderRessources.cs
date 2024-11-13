@@ -7,7 +7,7 @@ namespace P3.Resources.Models
 {
     public static class Order
     {
-        private static ResourceManager resourceManager = new ResourceManager("P3.Resources.Models.Services.Order", Assembly.GetExecutingAssembly());
+        private static ResourceManager resourceManager = new ResourceManager("P3.Resources.Models.Order", Assembly.GetExecutingAssembly());
         private static CultureInfo resourceCulture;
 
         public static string ErrorMissingName
