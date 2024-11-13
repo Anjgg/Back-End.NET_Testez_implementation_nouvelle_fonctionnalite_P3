@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace P3AddNewFunctionalityDotNetCore.Migrations.AppIdentityDb
+namespace P3.Migrations.AppIdentityDb
 {
     public partial class Initial : Migration
     {

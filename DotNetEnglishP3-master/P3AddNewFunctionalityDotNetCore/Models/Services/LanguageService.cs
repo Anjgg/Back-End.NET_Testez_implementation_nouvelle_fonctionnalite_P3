@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 
-namespace P3AddNewFunctionalityDotNetCore.Models.Services
+namespace P3.Models.Services
 {
     public class LanguageService : ILanguageService
     {

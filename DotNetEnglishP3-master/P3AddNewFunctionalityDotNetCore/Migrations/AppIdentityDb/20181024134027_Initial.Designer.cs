@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using P3AddNewFunctionalityDotNetCore.Models;
+using P3.Models;
 
-namespace P3AddNewFunctionalityDotNetCore.Migrations.AppIdentityDb
+namespace P3.Migrations.AppIdentityDb
 {
     [DbContext(typeof(AppIdentityDbContext))]
     [Migration("20181024134027_Initial")]

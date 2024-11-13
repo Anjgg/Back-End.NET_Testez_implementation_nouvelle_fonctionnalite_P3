@@ -1,8 +1,8 @@
-﻿using P3AddNewFunctionalityDotNetCore.Models.Entities;
+﻿using P3.Models.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace P3AddNewFunctionalityDotNetCore.Models
+namespace P3.Models
 {
     public class Cart : ICart
     {

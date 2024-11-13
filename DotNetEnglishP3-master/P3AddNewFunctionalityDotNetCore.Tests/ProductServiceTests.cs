@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Localization;
-using P3AddNewFunctionalityDotNetCore.Controllers;
-using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
+using P3.Controllers;
+using P3.Models.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using Xunit;
 
-namespace P3AddNewFunctionalityDotNetCore.Tests
+namespace P3.Tests
 {
     public class ProductServiceTests
     {

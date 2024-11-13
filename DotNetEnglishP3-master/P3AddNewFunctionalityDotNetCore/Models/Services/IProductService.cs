@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using P3AddNewFunctionalityDotNetCore.Models.Entities;
-using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
+using P3.Models.Entities;
+using P3.Models.ViewModels;
 
-namespace P3AddNewFunctionalityDotNetCore.Models.Services
+namespace P3.Models.Services
 {
     public interface IProductService
     {

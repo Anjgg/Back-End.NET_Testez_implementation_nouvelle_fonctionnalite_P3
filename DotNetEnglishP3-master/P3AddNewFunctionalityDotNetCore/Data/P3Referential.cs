@@ -1,10 +1,10 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using P3AddNewFunctionalityDotNetCore.Models.Entities;
+using P3.Models.Entities;
 using System.Data;
 
-namespace P3AddNewFunctionalityDotNetCore.Data
+namespace P3.Data
 {
     public class P3Referential : DbContext
     {

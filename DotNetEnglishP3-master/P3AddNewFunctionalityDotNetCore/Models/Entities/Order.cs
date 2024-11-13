@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace P3AddNewFunctionalityDotNetCore.Models.Entities
+namespace P3.Models.Entities
 {
     public partial class Order
     {

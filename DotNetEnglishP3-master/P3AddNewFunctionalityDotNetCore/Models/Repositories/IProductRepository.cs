@@ -1,8 +1,8 @@
-﻿using P3AddNewFunctionalityDotNetCore.Models.Entities;
+﻿using P3.Models.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace P3AddNewFunctionalityDotNetCore.Models.Repositories
+namespace P3.Models.Repositories
 {
     public interface IProductRepository
     {

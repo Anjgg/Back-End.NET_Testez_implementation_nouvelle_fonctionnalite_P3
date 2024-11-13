@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using P3AddNewFunctionalityDotNetCore.Models.Entities;
+using P3.Models.Entities;
 
-namespace P3AddNewFunctionalityDotNetCore.Models.Repositories
+namespace P3.Models.Repositories
 {
     public interface IOrderRepository
     {

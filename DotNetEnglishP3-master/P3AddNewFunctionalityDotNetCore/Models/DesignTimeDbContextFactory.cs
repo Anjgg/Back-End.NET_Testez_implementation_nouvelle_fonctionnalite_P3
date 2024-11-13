@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace P3AddNewFunctionalityDotNetCore.Models
+namespace P3.Models
 {
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppIdentityDbContext>
     {

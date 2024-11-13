@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using P3AddNewFunctionalityDotNetCore.Data;
+using P3.Data;
 
-namespace P3AddNewFunctionalityDotNetCore.Migrations
+namespace P3.Migrations
 {
     [DbContext(typeof(P3Referential))]
     [Migration("20190127080942_InitialMigration")]
@@ -21,7 +21,7 @@ namespace P3AddNewFunctionalityDotNetCore.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("P3AddNewFunctionalityDotNetCore.Models.Entities.Order", b =>
+            modelBuilder.Entity("P3.Models.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace P3AddNewFunctionalityDotNetCore.Migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("P3AddNewFunctionalityDotNetCore.Models.Entities.OrderLine", b =>
+            modelBuilder.Entity("P3.Models.Entities.OrderLine", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace P3AddNewFunctionalityDotNetCore.Migrations
                     b.ToTable("OrderLine");
                 });
 
-            modelBuilder.Entity("P3AddNewFunctionalityDotNetCore.Models.Entities.Product", b =>
+            modelBuilder.Entity("P3.Models.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,14 +87,14 @@ namespace P3AddNewFunctionalityDotNetCore.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("P3AddNewFunctionalityDotNetCore.Models.Entities.OrderLine", b =>
+            modelBuilder.Entity("P3.Models.Entities.OrderLine", b =>
                 {
-                    b.HasOne("P3AddNewFunctionalityDotNetCore.Models.Entities.Order", "Order")
+                    b.HasOne("P3.Models.Entities.Order", "Order")
                         .WithMany("OrderLine")
                         .HasForeignKey("OrderId")
                         .HasConstraintName("FK_OrderLineEntity_OrderEntity_OrderEntityId");
 
-                    b.HasOne("P3AddNewFunctionalityDotNetCore.Models.Entities.Product", "Product")
+                    b.HasOne("P3.Models.Entities.Product", "Product")
                         .WithMany("OrderLine")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("FK__OrderLine__Produ__52593CB8");

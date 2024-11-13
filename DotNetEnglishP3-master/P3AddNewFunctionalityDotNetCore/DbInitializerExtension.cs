@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using P3AddNewFunctionalityDotNetCore.Data;
-using P3AddNewFunctionalityDotNetCore.Models;
+using P3.Data;
+using P3.Models;
 using System;
 
-namespace P3AddNewFunctionalityDotNetCore
+namespace P3
 {
     internal static class DbInitializerExtension
     {

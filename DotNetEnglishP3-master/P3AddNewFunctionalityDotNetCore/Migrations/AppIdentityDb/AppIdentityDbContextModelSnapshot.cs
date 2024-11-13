@@ -4,9 +4,9 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using P3AddNewFunctionalityDotNetCore.Models;
+using P3.Models;
 
-namespace P3AddNewFunctionalityDotNetCore.Migrations.AppIdentityDb
+namespace P3.Migrations.AppIdentityDb
 {
     [DbContext(typeof(AppIdentityDbContext))]
     partial class AppIdentityDbContextModelSnapshot : ModelSnapshot

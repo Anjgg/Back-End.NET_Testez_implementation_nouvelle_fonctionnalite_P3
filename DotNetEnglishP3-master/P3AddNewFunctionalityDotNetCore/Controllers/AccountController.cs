@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
+using P3.Models.ViewModels;
 
-namespace P3AddNewFunctionalityDotNetCore.Controllers
+namespace P3.Controllers
 {
     [Authorize]
     public class AccountController : Controller

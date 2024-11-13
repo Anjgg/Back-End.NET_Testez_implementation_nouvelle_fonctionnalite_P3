@@ -1,12 +1,12 @@
-﻿using P3AddNewFunctionalityDotNetCore.Models.Entities;
-using P3AddNewFunctionalityDotNetCore.Models.Repositories;
-using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
+﻿using P3.Models.Entities;
+using P3.Models.Repositories;
+using P3.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Order = P3AddNewFunctionalityDotNetCore.Models.Entities.Order;
+using Order = P3.Models.Entities.Order;
 
-namespace P3AddNewFunctionalityDotNetCore.Models.Services
+namespace P3.Models.Services
 {
     public class OrderService : IOrderService
     {

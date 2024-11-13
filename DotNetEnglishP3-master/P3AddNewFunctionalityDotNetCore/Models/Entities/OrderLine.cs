@@ -1,4 +1,4 @@
-﻿namespace P3AddNewFunctionalityDotNetCore.Models.Entities
+﻿namespace P3.Models.Entities
 {
     public partial class OrderLine
     {

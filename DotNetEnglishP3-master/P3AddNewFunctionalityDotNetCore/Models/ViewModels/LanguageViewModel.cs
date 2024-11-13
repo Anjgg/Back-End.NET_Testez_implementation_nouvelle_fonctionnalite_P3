@@ -1,4 +1,4 @@
-﻿namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
+﻿namespace P3.Models.ViewModels
 {
     public class LanguageViewModel
     {

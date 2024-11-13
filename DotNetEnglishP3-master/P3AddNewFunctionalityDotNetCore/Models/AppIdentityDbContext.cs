@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 
-namespace P3AddNewFunctionalityDotNetCore.Models
+namespace P3.Models
 {
     public class AppIdentityDbContext : IdentityDbContext<IdentityUser>
     {

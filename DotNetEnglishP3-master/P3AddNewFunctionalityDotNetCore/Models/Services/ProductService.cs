@@ -5,12 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
-using P3AddNewFunctionalityDotNetCore.Models.Entities;
-using P3AddNewFunctionalityDotNetCore.Models.Repositories;
-using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
+using P3.Models.Entities;
+using P3.Models.Repositories;
+using P3.Models.ViewModels;
 using System.ComponentModel.DataAnnotations;
 
-namespace P3AddNewFunctionalityDotNetCore.Models.Services
+namespace P3.Models.Services
 {
     public class ProductService : IProductService
     {

@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using P3AddNewFunctionalityDotNetCore.Models.Repositories;
-using P3AddNewFunctionalityDotNetCore.Models.Services;
-using P3AddNewFunctionalityDotNetCore.Models;
+using P3.Models.Repositories;
+using P3.Models.Services;
+using P3.Models;
 using Microsoft.AspNetCore.Identity;
-using P3AddNewFunctionalityDotNetCore.Data;
+using P3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using P3AddNewFunctionalityDotNetCore;
+using P3;
 using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);

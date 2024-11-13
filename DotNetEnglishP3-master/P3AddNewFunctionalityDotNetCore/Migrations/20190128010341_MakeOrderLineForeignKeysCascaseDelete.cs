@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace P3AddNewFunctionalityDotNetCore.Migrations
+namespace P3.Migrations
 {
     public partial class MakeOrderLineForeignKeysCascaseDelete : Migration
     {
