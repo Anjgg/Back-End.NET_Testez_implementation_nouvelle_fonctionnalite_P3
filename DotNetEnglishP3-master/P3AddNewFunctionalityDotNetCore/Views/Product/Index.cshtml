@@ -8,7 +8,7 @@
 <div id="panel-body">
     <table class="table table-bordered table-striped table-sm">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th>
                     <label>@Localizer["Name"]</label>
                 </th>
@@ -21,6 +21,9 @@
                 <th>
                     <label>@Localizer["Stock"]</label>
                 </th>
+                <th>
+                    <label>Action</label>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +34,7 @@
                     <td>@p.Description</td>
                     <td style="text-align:center">@p.Price</td>
                     <td style="text-align:center">@p.Stock</td>
-                    <td>
+                    <td class="text-center">
                         <form id="@p.Id" asp-action="AddToCart" asp-controller="Cart" method="post">
                             <input type="hidden" name="id" value="@p.Id" />
                             <button type="submit" class="btn btn-primary">

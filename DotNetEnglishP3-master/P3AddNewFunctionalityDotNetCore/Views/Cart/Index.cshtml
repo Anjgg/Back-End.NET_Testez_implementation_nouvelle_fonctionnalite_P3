@@ -1,13 +1,14 @@
 ﻿@model P3.Models.Cart
 
-<h2>@Localizer["YourCart"]</h2>
-<table class="table table-bordered table-striped">
+<h2 class="mt-3">@Localizer["YourCart"]</h2>
+<table class="table table-bordered table-striped mt-3">
     <thead>
-        <tr>
+        <tr class="text-center">
             <th>@Localizer["Quantity"]</th>
             <th>@Localizer["Item"]</th>
             <th class="text-end">@Localizer["Price"]</th>
             <th class="text-end">@Localizer["Subtotal"]</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -20,7 +21,7 @@
                 <td class="text-end">
                     @((line.Quantity * line.Product.Price).ToString("c"))
                 </td>
-                <td>
+                <td class="text-center">
                     <form asp-action="RemoveFromCart" method="post">
                         <input type="hidden" name="id"
                                value="@line.Product.Id" />
@@ -38,12 +39,14 @@
             <td class="text-end">
                 @Model.GetTotalValue().ToString("c")
             </td>
+            <td></td>
         </tr>
         <tr>
             <td colspan="3" class="text-end">@Localizer["Average"]:</td>
             <td class="text-end">
                 @Model.GetAverageValue().ToString("c")
             </td>
+            <td></td>
         </tr>
     </tfoot>
 </table>
