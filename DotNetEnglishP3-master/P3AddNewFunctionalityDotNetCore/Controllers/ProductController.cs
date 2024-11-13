@@ -41,12 +41,7 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         [HttpPost]
         public IActionResult Create(ProductViewModel product)
         {
-            var modelErrors = _productService.CheckProductModelErrors(product);
-
-            foreach (ValidationResult error in modelErrors)
-            {
-                ModelState.AddModelError("", error.ErrorMessage);
-            }
+           
 
             if (ModelState.IsValid)
             {
