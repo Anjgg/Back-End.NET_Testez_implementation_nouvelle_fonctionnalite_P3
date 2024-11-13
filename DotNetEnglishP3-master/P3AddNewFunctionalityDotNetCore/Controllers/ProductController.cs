@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using P3AddNewFunctionalityDotNetCore.Models.Services;
 using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace P3AddNewFunctionalityDotNetCore.Controllers
@@ -40,6 +41,13 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         [HttpPost]
         public IActionResult Create(ProductViewModel product)
         {
+            var modelErrors = _productService.CheckProductModelErrors(product);
+
+            foreach (ValidationResult error in modelErrors)
+            {
+                ModelState.AddModelError("", error.ErrorMessage);
+            }
+
             if (ModelState.IsValid)
             {
                 _productService.SaveProduct(product);

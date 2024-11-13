@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
 using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
@@ -12,6 +13,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         Product GetProductById(int id);
         ProductViewModel GetProductByIdViewModel(int id);
         void UpdateProductQuantities();
+        List<ValidationResult> CheckProductModelErrors(ProductViewModel product);
         void SaveProduct(ProductViewModel product);
         void DeleteProduct(int id);
         Task<Product> GetProduct(int id);
