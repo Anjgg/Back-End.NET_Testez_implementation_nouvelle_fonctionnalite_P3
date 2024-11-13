@@ -1,4 +1,8 @@
 ﻿@model P3.Models.ViewModels.OrderViewModel
+@{
+    ViewData["Title"] = Localizer["CompleteOrder"];
+    Layout = "_Layout";
+}
 
 <h2>@Localizer["OrderTitle"]</h2>
 <div asp-validation-summary="All" class="text-danger"></div>

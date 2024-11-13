@@ -28,7 +28,7 @@ namespace P3.Controllers
         [HttpPost]
         public IActionResult Index(OrderViewModel order)
         {
-            if (!((Cart) _cart).Lines.Any())
+            if (!((Cart)_cart).Lines.Any())
             {
                 ModelState.AddModelError("", _localizer["CartEmpty"]);
             }
