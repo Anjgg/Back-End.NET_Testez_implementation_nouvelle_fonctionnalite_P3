@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Localization;
-using P3.Controllers;
-using P3.Models.ViewModels;
+﻿using P3.Models.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -8,7 +6,7 @@ using Xunit;
 
 namespace P3.Tests
 {
-    public class ProductServiceTests
+    public class ProductViewModelTests
     {
         [Theory]
         [InlineData("en")]
@@ -76,6 +74,7 @@ namespace P3.Tests
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.StockNotAnInteger;
             Assert.Contains(results, res => res.ErrorMessage == expectedMessage);
+            Assert.Equal(2, results.Count);
         }
 
         [Theory]
@@ -144,6 +143,7 @@ namespace P3.Tests
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.PriceNotANumber;
             Assert.Contains(results, res => res.ErrorMessage == expectedMessage);
+            Assert.Equal(2, results.Count);
         }
 
         [Theory]
