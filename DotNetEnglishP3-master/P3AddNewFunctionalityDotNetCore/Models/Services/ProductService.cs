@@ -93,6 +93,14 @@ namespace P3.Models.Services
             }
         }
 
+        public List<ValidationResult> ValidateModel(ProductViewModel product)
+        {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(product);
+            Validator.TryValidateObject(product, context, results, true);
+            return results;
+        }
+
         public void SaveProduct(ProductViewModel product)
         {
             var productToAdd = MapToProductEntity(product);

@@ -41,9 +41,9 @@ namespace P3.Controllers
         [HttpPost]
         public IActionResult Create(ProductViewModel product)
         {
-           
-
-            if (ModelState.IsValid)
+            var listError = _productService.ValidateModel(product);
+            
+            if (listError.Count == 0)
             {
                 _productService.SaveProduct(product);
                 return RedirectToAction("Admin");

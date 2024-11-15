@@ -13,6 +13,7 @@ namespace P3.Models.Services
         Product GetProductById(int id);
         ProductViewModel GetProductByIdViewModel(int id);
         void UpdateProductQuantities();
+        public List<ValidationResult> ValidateModel(ProductViewModel product);
         void SaveProduct(ProductViewModel product);
         void DeleteProduct(int id);
         Task<Product> GetProduct(int id);
