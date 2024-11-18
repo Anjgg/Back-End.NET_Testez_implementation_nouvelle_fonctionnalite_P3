@@ -41,7 +41,7 @@ namespace P3.Controllers
         [HttpPost]
         public IActionResult Create(ProductViewModel product)
         {
-            var listError = _productService.CheckProductModelErrors(product);
+            var listError = _productService.CheckProductViewModelErrors(product);
             
             if (listError.Count == 0)
             {

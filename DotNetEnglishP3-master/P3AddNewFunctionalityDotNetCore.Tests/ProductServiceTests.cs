@@ -9,6 +9,10 @@ using Moq;
 using System.Drawing.Text;
 using P3.Models.Repositories;
 using Microsoft.Extensions.Localization;
+using Microsoft.EntityFrameworkCore;
+using P3.Data;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 
 namespace P3.Tests
@@ -16,7 +20,7 @@ namespace P3.Tests
     public class ProductServiceTests
     {
         [Fact]
-        public void ProductViewModel_ShouldReturnListEmpty_WhenProductViewModelIsOK()
+        public void CheckProductViewModelErrors_ShouldReturnListEmpty_WhenProductViewModelIsOK()
         {
             // Arrange
             var model = new ProductViewModel
@@ -31,7 +35,7 @@ namespace P3.Tests
                                                     It.IsAny<IStringLocalizer<ProductService>>());
 
             // Act
-            var results = productService.CheckProductModelErrors(model);
+            var results = productService.CheckProductViewModelErrors(model);
 
             // Assert
             Assert.Empty(results);
@@ -41,7 +45,7 @@ namespace P3.Tests
         [InlineData("en")]
         [InlineData("fr")]
         [InlineData("es")]
-        public void ProductViewModel_ShouldThrowError_WhenNameIsEmpty(string culture)
+        public void CheckProductViewModelErrors_ShouldThrowError_WhenNameIsEmpty(string culture)
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
@@ -57,7 +61,7 @@ namespace P3.Tests
                                                     It.IsAny<IStringLocalizer<ProductService>>());
 
             // Act
-            var results = productService.CheckProductModelErrors(model);
+            var results = productService.CheckProductViewModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.MissingName;
@@ -69,7 +73,7 @@ namespace P3.Tests
         [InlineData("en")]
         [InlineData("fr")]
         [InlineData("es")]
-        public void ProductViewModel_ShouldThrowError_WhenStockIsEmpty(string culture)
+        public void CheckProductViewModelErrors_ShouldThrowError_WhenStockIsEmpty(string culture)
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
@@ -86,7 +90,7 @@ namespace P3.Tests
 
 
             // Act
-            var results = productService.CheckProductModelErrors(model);
+            var results = productService.CheckProductViewModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.MissingStock;
@@ -98,7 +102,7 @@ namespace P3.Tests
         [InlineData("en")]
         [InlineData("fr")]
         [InlineData("es")]
-        public void ProductViewModel_ShouldThrowError_WhenStockNotAInteger(string culture)
+        public void CheckProductViewModelErrors_ShouldThrowError_WhenStockNotAInteger(string culture)
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
@@ -115,7 +119,7 @@ namespace P3.Tests
 
 
             // Act
-            var results = productService.CheckProductModelErrors(model);
+            var results = productService.CheckProductViewModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.StockNotAnInteger;
@@ -127,7 +131,7 @@ namespace P3.Tests
         [InlineData("en")]
         [InlineData("fr")]
         [InlineData("es")]
-        public void ProductViewModel_ShouldThrowError_WhenStockNotGreaterThanZero(string culture)
+        public void CheckProductViewModelErrors_ShouldThrowError_WhenStockNotGreaterThanZero(string culture)
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
@@ -144,7 +148,7 @@ namespace P3.Tests
 
 
             // Act
-            var results = productService.CheckProductModelErrors(model);
+            var results = productService.CheckProductViewModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.StockNotGreaterThanZero;
@@ -156,7 +160,7 @@ namespace P3.Tests
         [InlineData("en")]
         [InlineData("fr")]
         [InlineData("es")]
-        public void ProductViewModel_ShouldThrowError_WhenPriceIsEmpty(string culture)
+        public void CheckProductViewModelErrors_ShouldThrowError_WhenPriceIsEmpty(string culture)
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
@@ -172,7 +176,7 @@ namespace P3.Tests
                                                     It.IsAny<IStringLocalizer<ProductService>>());
 
             // Act
-            var results = productService.CheckProductModelErrors(model);
+            var results = productService.CheckProductViewModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.MissingPrice;
@@ -184,7 +188,7 @@ namespace P3.Tests
         [InlineData("en")]
         [InlineData("fr")]
         [InlineData("es")]
-        public void ProductViewModel_ShouldThrowError_WhenPriceNotANumber(string culture)
+        public void CheckProductViewModelErrors_ShouldThrowError_WhenPriceNotANumber(string culture)
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
@@ -200,7 +204,7 @@ namespace P3.Tests
                                                     It.IsAny<IStringLocalizer<ProductService>>());
 
             // Act
-            var results = productService.CheckProductModelErrors(model);
+            var results = productService.CheckProductViewModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.PriceNotANumber;
@@ -212,7 +216,7 @@ namespace P3.Tests
         [InlineData("en")]
         [InlineData("fr")]
         [InlineData("es")]
-        public void ProductViewModel_ShouldThrowError_WhenPriceNotGreaterThanZero(string culture)   
+        public void CheckProductViewModelErrors_ShouldThrowError_WhenPriceNotGreaterThanZero(string culture)   
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
@@ -228,12 +232,55 @@ namespace P3.Tests
                                                     It.IsAny<IStringLocalizer<ProductService>>());
 
             // Act
-            var results = productService.CheckProductModelErrors(model);
+            var results = productService.CheckProductViewModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.PriceNotGreaterThanZero;
             Assert.Contains(results, res => res.ErrorMessage == expectedMessage);
             Assert.Single(results);
+        }
+
+        [Fact]
+        public async Task SaveProduct_ShouldAddSingleProductInDB_WhenOneProductViewModelIsValid()
+        {
+            // Arrange
+            var product = new ProductViewModel
+            {
+                Name = "TestProduct Name",
+                Stock = "22",
+                Price = "1,35",
+                Description = "TestProduct Description",
+                Details = "TestProduct Details"
+            };
+
+            var options = new DbContextOptionsBuilder<P3Referential>()
+                                    .UseSqlServer("Server=.;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true")
+                                    .Options;
+            var config = new Mock<IConfiguration>();
+            var context = new P3Referential(options, config.Object);
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
+            var productRepository = new ProductRepository(context);
+            var productService = new ProductService(It.IsAny<ICart>(),
+                                                    productRepository,
+                                                    It.IsAny<IOrderRepository>(),
+                                                    It.IsAny<IStringLocalizer<ProductService>>());
+
+            // Act
+            productService.SaveProduct(product);
+
+            // Assert
+            var savedProductList = await context.Product.ToListAsync();
+            Assert.Single(savedProductList);
+
+            var savedProduct = await context.Product.SingleOrDefaultAsync(p => p.Id == 1);
+            Assert.NotNull(savedProduct);
+            Assert.Equal("TestProduct Name", savedProduct.Name);
+            Assert.Equal(22, savedProduct.Quantity);
+            Assert.Equal(1.35, savedProduct.Price);
+            Assert.Equal("TestProduct Description", savedProduct.Description);
+            Assert.Equal("TestProduct Details", savedProduct?.Details);
         }
     }
 }

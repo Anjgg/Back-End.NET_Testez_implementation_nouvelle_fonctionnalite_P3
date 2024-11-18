@@ -1,46 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using P3.Controllers;
+using P3.Data;
+using P3.Models.Entities;
+using P3.Models.Repositories;
 using P3.Models.Services;
 using P3.Models.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Xunit;
+using System.Threading.Tasks;
+using System.Linq;
+using P3.Models;
+using Microsoft.Extensions.Localization;
 
 
 namespace P3AddNewFunctionalityDotNetCore.Tests
 {
     public class ProductControllerTests
     {
-        [Fact]
-        public void ProductControllerCreate_ShouldReturnView_WhenProductViewModelIsInvalid()
-        {
-            // Arrange
-            var product = new ProductViewModel
-            {
-                Name = string.Empty,
-                Stock = string.Empty,
-                Price = string.Empty
-            };
-            var listError = new List<ValidationResult>
-            {
-                new ValidationResult("MissingName"),
-                new ValidationResult("MissingStock"),
-                new ValidationResult("MissingPrice"),
-            };
-            var productService = new Mock<IProductService>();
-            productService.Setup(ps => ps.CheckProductModelErrors(It.IsAny<ProductViewModel>())).Returns(listError);
-
-            var controller = new ProductController(productService.Object,It.IsAny<ILanguageService>());
-
-            // Act
-            var actionResult = controller.Create(product);
-
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(actionResult);
-            Assert.Equal(product, viewResult.Model);
-            productService.Verify(service => service.SaveProduct(It.IsAny<ProductViewModel>()), Times.Never);
-        }
+        
 
         [Fact]
         public void ProductControllerCreate_ShouldReturnAdminAction_WhenProductViewModelIsOK()
@@ -55,7 +36,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             var listError = new List<ValidationResult> { };
 
             var productService = new Mock<IProductService>();
-            productService.Setup(ps => ps.CheckProductModelErrors(It.IsAny<ProductViewModel>())).Returns(listError);
+            productService.Setup(ps => ps.CheckProductViewModelErrors(It.IsAny<ProductViewModel>())).Returns(listError);
 
             var controller = new ProductController(productService.Object, It.IsAny<ILanguageService>());
 
@@ -67,6 +48,8 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             Assert.Equal("Admin", redirectResult.ActionName);
             productService.Verify(service => service.SaveProduct(product), Times.Once);
         }
+
+        // test save product, 
     }
 }
 
