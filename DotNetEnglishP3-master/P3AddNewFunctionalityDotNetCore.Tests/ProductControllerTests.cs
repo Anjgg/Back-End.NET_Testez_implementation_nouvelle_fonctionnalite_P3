@@ -1,14 +1,11 @@
-﻿using P3.Models.ViewModels;
+﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
+using P3.Controllers;
+using P3.Models.Services;
+using P3.Models.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using Xunit;
-using Moq;
-using P3.Models.Services;
-using P3.Controllers;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using P3.Models.Entities;
 
 
 namespace P3AddNewFunctionalityDotNetCore.Tests
@@ -31,7 +28,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
                 new ValidationResult("MissingStock"),
                 new ValidationResult("MissingPrice"),
             };
-
             var productService = new Mock<IProductService>();
             productService.Setup(ps => ps.ValidateModel(It.IsAny<ProductViewModel>())).Returns(listError);
 
