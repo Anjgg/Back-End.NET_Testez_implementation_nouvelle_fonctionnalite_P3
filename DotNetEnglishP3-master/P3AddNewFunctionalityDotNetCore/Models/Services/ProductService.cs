@@ -93,7 +93,7 @@ namespace P3.Models.Services
             }
         }
 
-        public List<ValidationResult> ValidateModel(ProductViewModel product)
+        public List<ValidationResult> CheckProductModelErrors(ProductViewModel product)
         {
             var results = new List<ValidationResult>();
             var context = new ValidationContext(product);

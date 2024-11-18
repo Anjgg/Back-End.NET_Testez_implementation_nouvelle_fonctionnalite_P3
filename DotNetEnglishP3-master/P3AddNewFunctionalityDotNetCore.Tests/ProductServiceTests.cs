@@ -15,6 +15,28 @@ namespace P3.Tests
 {
     public class ProductServiceTests
     {
+        [Fact]
+        public void ProductViewModel_ShouldReturnListEmpty_WhenProductViewModelIsOK()
+        {
+            // Arrange
+            var model = new ProductViewModel
+            {
+                Name = "Name",
+                Stock = "1",
+                Price = "1"
+            };
+            var productService = new ProductService(It.IsAny<ICart>(),
+                                                    It.IsAny<IProductRepository>(),
+                                                    It.IsAny<IOrderRepository>(),
+                                                    It.IsAny<IStringLocalizer<ProductService>>());
+
+            // Act
+            var results = productService.CheckProductModelErrors(model);
+
+            // Assert
+            Assert.Empty(results);
+        }
+
         [Theory]
         [InlineData("en")]
         [InlineData("fr")]
@@ -35,7 +57,7 @@ namespace P3.Tests
                                                     It.IsAny<IStringLocalizer<ProductService>>());
 
             // Act
-            var results = productService.ValidateModel(model);
+            var results = productService.CheckProductModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.MissingName;
@@ -64,7 +86,7 @@ namespace P3.Tests
 
 
             // Act
-            var results = productService.ValidateModel(model);
+            var results = productService.CheckProductModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.MissingStock;
@@ -93,7 +115,7 @@ namespace P3.Tests
 
 
             // Act
-            var results = productService.ValidateModel(model);
+            var results = productService.CheckProductModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.StockNotAnInteger;
@@ -122,7 +144,7 @@ namespace P3.Tests
 
 
             // Act
-            var results = productService.ValidateModel(model);
+            var results = productService.CheckProductModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.StockNotGreaterThanZero;
@@ -150,7 +172,7 @@ namespace P3.Tests
                                                     It.IsAny<IStringLocalizer<ProductService>>());
 
             // Act
-            var results = productService.ValidateModel(model);
+            var results = productService.CheckProductModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.MissingPrice;
@@ -178,7 +200,7 @@ namespace P3.Tests
                                                     It.IsAny<IStringLocalizer<ProductService>>());
 
             // Act
-            var results = productService.ValidateModel(model);
+            var results = productService.CheckProductModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.PriceNotANumber;
@@ -206,34 +228,12 @@ namespace P3.Tests
                                                     It.IsAny<IStringLocalizer<ProductService>>());
 
             // Act
-            var results = productService.ValidateModel(model);
+            var results = productService.CheckProductModelErrors(model);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.PriceNotGreaterThanZero;
             Assert.Contains(results, res => res.ErrorMessage == expectedMessage);
             Assert.Single(results);
-        }
-
-        [Fact]
-        public void ProductViewModel_ShouldReturnListEmpty_WhenProductViewModelIsOK()
-        {
-            // Arrange
-            var model = new ProductViewModel
-            {
-                Name = "Name",
-                Stock = "1",
-                Price = "1"
-            };
-            var productService = new ProductService(It.IsAny<ICart>(),
-                                                    It.IsAny<IProductRepository>(),
-                                                    It.IsAny<IOrderRepository>(),
-                                                    It.IsAny<IStringLocalizer<ProductService>>());
-
-            // Act
-            var results = productService.ValidateModel(model);
-
-            // Assert
-            Assert.Empty(results);
         }
     }
 }

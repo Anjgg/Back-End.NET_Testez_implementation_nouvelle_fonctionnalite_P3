@@ -29,7 +29,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
                 new ValidationResult("MissingPrice"),
             };
             var productService = new Mock<IProductService>();
-            productService.Setup(ps => ps.ValidateModel(It.IsAny<ProductViewModel>())).Returns(listError);
+            productService.Setup(ps => ps.CheckProductModelErrors(It.IsAny<ProductViewModel>())).Returns(listError);
 
             var controller = new ProductController(productService.Object,It.IsAny<ILanguageService>());
 
@@ -55,7 +55,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             var listError = new List<ValidationResult> { };
 
             var productService = new Mock<IProductService>();
-            productService.Setup(ps => ps.ValidateModel(It.IsAny<ProductViewModel>())).Returns(listError);
+            productService.Setup(ps => ps.CheckProductModelErrors(It.IsAny<ProductViewModel>())).Returns(listError);
 
             var controller = new ProductController(productService.Object, It.IsAny<ILanguageService>());
 
