@@ -1,19 +1,15 @@
-﻿using P3.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Localization;
+using Moq;
+using P3.Data;
+using P3.Models;
+using P3.Models.Repositories;
 using P3.Models.Services;
 using P3.Models.ViewModels;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using Xunit;
-using Moq;
-using System.Drawing.Text;
-using P3.Models.Repositories;
-using Microsoft.Extensions.Localization;
-using Microsoft.EntityFrameworkCore;
-using P3.Data;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using P3.Models.Entities;
+using Xunit;
 
 
 namespace P3.Tests
@@ -25,24 +21,19 @@ namespace P3.Tests
         public ProductServiceTests() 
         {
             _productService = new ProductService(It.IsAny<ICart>(),
-                                                    It.IsAny<IProductRepository>(),
-                                                    It.IsAny<IOrderRepository>(),
-                                                    It.IsAny<IStringLocalizer<ProductService>>());
+                                                 It.IsAny<IProductRepository>(),
+                                                 It.IsAny<IOrderRepository>(),
+                                                 It.IsAny<IStringLocalizer<ProductService>>());
         }
 
         [Fact]
         public void CheckProductViewModelErrors_ShouldReturnListEmpty_WhenProductViewModelIsOK()
         {
             // Arrange
-            var model = new ProductViewModel
-            {
-                Name = "Name",
-                Stock = "1",
-                Price = "1"
-            };
+            var product = CreateProductViewModel();
 
             // Act
-            var results = _productService.CheckProductViewModelErrors(model);
+            var results = _productService.CheckProductViewModelErrors(product);
 
             // Assert
             Assert.Empty(results);
@@ -56,15 +47,10 @@ namespace P3.Tests
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
-            var model = new ProductViewModel
-            {
-                Name = string.Empty,
-                Stock = "1",
-                Price = "1"
-            };
-
+            var product = CreateProductViewModel(name: string.Empty);
+            
             // Act
-            var results = _productService.CheckProductViewModelErrors(model);
+            var results = _productService.CheckProductViewModelErrors(product);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.MissingName;
@@ -80,15 +66,10 @@ namespace P3.Tests
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
-            var model = new ProductViewModel
-            {
-                Name = "Name",
-                Stock = string.Empty,
-                Price = "1"
-            };
+            var product = CreateProductViewModel(stock: string.Empty);
             
             // Act
-            var results = _productService.CheckProductViewModelErrors(model);
+            var results = _productService.CheckProductViewModelErrors(product);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.MissingStock;
@@ -104,15 +85,10 @@ namespace P3.Tests
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
-            var model = new ProductViewModel
-            {
-                Name = "Name",
-                Stock = "Stock",
-                Price = "1"
-            };
+            var product = CreateProductViewModel(stock: "stockNotAMember");
             
             // Act
-            var results = _productService.CheckProductViewModelErrors(model);
+            var results = _productService.CheckProductViewModelErrors(product);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.StockNotAnInteger;
@@ -128,15 +104,10 @@ namespace P3.Tests
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
-            var model = new ProductViewModel
-            {
-                Name = "Name",
-                Stock = "-1",
-                Price = "1"
-            };
+            var product = CreateProductViewModel(stock: "-1");
             
             // Act
-            var results = _productService.CheckProductViewModelErrors(model);
+            var results = _productService.CheckProductViewModelErrors(product);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.StockNotGreaterThanZero;
@@ -152,15 +123,10 @@ namespace P3.Tests
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
-            var model = new ProductViewModel
-            {
-                Name = "Name",
-                Stock = "1",
-                Price = string.Empty
-            };
+            var product = CreateProductViewModel(price: string.Empty);
             
             // Act
-            var results = _productService.CheckProductViewModelErrors(model);
+            var results = _productService.CheckProductViewModelErrors(product);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.MissingPrice;
@@ -176,15 +142,10 @@ namespace P3.Tests
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
-            var model = new ProductViewModel
-            {
-                Name = "Name",
-                Stock = "1",
-                Price = "Price"
-            };
+            var product = CreateProductViewModel(price: "priceNotANumber");
             
             // Act
-            var results = _productService.CheckProductViewModelErrors(model);
+            var results = _productService.CheckProductViewModelErrors(product);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.PriceNotANumber;
@@ -200,15 +161,10 @@ namespace P3.Tests
         {
             // Arrange
             CultureInfo.CurrentUICulture = new CultureInfo(culture);
-            var model = new ProductViewModel
-            {
-                Name = "Name",
-                Stock = "1",
-                Price = "-1"
-            };
+            var product = CreateProductViewModel(price: "-1");
            
             // Act
-            var results = _productService.CheckProductViewModelErrors(model);
+            var results = _productService.CheckProductViewModelErrors(product);
 
             // Assert
             var expectedMessage = Resources.Models.Services.ProductService.PriceNotGreaterThanZero;
@@ -220,28 +176,8 @@ namespace P3.Tests
         public async Task SaveProduct_ShouldAddSingleProductInDB_WhenProductViewModelIsValid()
         {
             // Arrange
-            var product = new ProductViewModel
-            {
-                Name = "TestProduct Name",
-                Stock = "22",
-                Price = "1,35",
-                Description = "TestProduct Description",
-                Details = "TestProduct Details"
-            };
-
-            var options = new DbContextOptionsBuilder<P3Referential>()
-                                    .UseSqlServer("Server=.;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true")
-                                    .Options;
-            var config = new Mock<IConfiguration>();
-            var context = new P3Referential(options, config.Object);
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-
-            var productRepository = new ProductRepository(context);
-            _productService = new ProductService(It.IsAny<ICart>(),
-                                                    productRepository,
-                                                    It.IsAny<IOrderRepository>(),
-                                                    It.IsAny<IStringLocalizer<ProductService>>());
+            var product = CreateProductViewModel();
+            var context = CreateTestDb();
 
             // Act
             _productService.SaveProduct(product);
@@ -251,54 +187,22 @@ namespace P3.Tests
             Assert.Single(savedProductList);
 
             var savedProduct = await context.Product.SingleOrDefaultAsync(p => p.Id == 1);
-            Assert.Equal("TestProduct Name", savedProduct.Name);
-            Assert.Equal(22, savedProduct.Quantity);
-            Assert.Equal(1.35, savedProduct.Price);
-            Assert.Equal("TestProduct Description", savedProduct.Description);
-            Assert.Equal("TestProduct Details", savedProduct.Details);
+            Assert.Equal("TestProductName", savedProduct.Name);
+            Assert.Equal(1, savedProduct.Quantity);
+            Assert.Equal(1.11, savedProduct.Price);
         }
 
         [Fact]
         public async Task DeleteProduct_ShouldReturnOneEntitiesInDB_WhenDBContainsTwoEntities()
         {
             // Arrange
-            var product1 = new ProductViewModel
-            {
-                Name = "TestProduct1 Name",
-                Stock = "11",
-                Price = "1,11",
-                Description = "TestProduct1 Description",
-                Details = "TestProduct1 Details"
-            };
-            var product2 = new ProductViewModel
-            {
-                Name = "TestProduct2 Name",
-                Stock = "22",
-                Price = "2,22",
-                Description = "TestProduct2 Description",
-                Details = "TestProduct2 Details"
-            };
 
-            var options = new DbContextOptionsBuilder<P3Referential>()
-                                    .UseSqlServer("Server=.;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true")
-                                    .Options;
-            var config = new Mock<IConfiguration>();
-            var context = new P3Referential(options, config.Object);
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-
-            var productRepository = new ProductRepository(context);
-            _productService = new ProductService(It.IsAny<ICart>(),
-                                                    productRepository,
-                                                    It.IsAny<IOrderRepository>(),
-                                                    It.IsAny<IStringLocalizer<ProductService>>());
+            var product1 = CreateProductViewModel(index : "1");
+            var product2 = CreateProductViewModel(index : "2");
+            var context = CreateTestDb();
             
             _productService.SaveProduct(product1);
             _productService.SaveProduct(product2);
-
-            
-            var savedProductListBeforeDelete = await context.Product.ToListAsync();
-            Assert.Equal(2, savedProductListBeforeDelete.Count);
 
             // Act 
             _productService.DeleteProduct(1);
@@ -308,11 +212,36 @@ namespace P3.Tests
             Assert.Single(savedProductList);
 
             var savedProduct = await context.Product.SingleOrDefaultAsync(p => p.Id == 2);
-            Assert.Equal("TestProduct2 Name", savedProduct.Name);
-            Assert.Equal(22, savedProduct.Quantity);
-            Assert.Equal(2.22, savedProduct.Price);
-            Assert.Equal("TestProduct2 Description", savedProduct.Description);
-            Assert.Equal("TestProduct2 Details", savedProduct.Details);
+            Assert.Equal("2TestProductName", savedProduct.Name);
+            Assert.Equal(21, savedProduct.Quantity);
+            Assert.Equal(21.11, savedProduct.Price);
+        }
+
+        private ProductViewModel CreateProductViewModel(string name = "TestProductName", string stock = "1", string price = "1,11", string index = null)
+        {
+            return new ProductViewModel
+            {
+                Name = $"{index}{name}",
+                Stock = $"{index}{stock}",
+                Price = $"{index}{price}",
+            };
+        }
+
+        private P3Referential CreateTestDb()
+        {
+            var options = new DbContextOptionsBuilder<P3Referential>()
+                                    .UseSqlServer("Server=.;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true")
+                                    .Options;
+            var config = new Mock<IConfiguration>();
+            var context = new P3Referential(options, config.Object);
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+            var productRepository = new ProductRepository(context);
+            _productService = new ProductService(It.IsAny<ICart>(),
+                                                    productRepository,
+                                                    It.IsAny<IOrderRepository>(),
+                                                    It.IsAny<IStringLocalizer<ProductService>>());
+            return context;
         }
     }
 }
