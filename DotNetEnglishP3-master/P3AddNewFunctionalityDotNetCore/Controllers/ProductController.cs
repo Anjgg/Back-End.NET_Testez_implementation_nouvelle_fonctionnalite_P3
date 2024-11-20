@@ -58,6 +58,7 @@ namespace P3.Controllers
         [HttpPost]
         public IActionResult DeleteProduct(int id)
         {
+
             _productService.DeleteProduct(id);
             return RedirectToAction("Admin");
         }

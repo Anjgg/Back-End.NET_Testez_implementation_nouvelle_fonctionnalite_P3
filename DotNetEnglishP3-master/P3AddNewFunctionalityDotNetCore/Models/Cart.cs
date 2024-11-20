@@ -41,6 +41,8 @@ namespace P3.Models
 
         public void Clear() => _cartLines.Clear();
 
+        public bool HasThisProduct(Product product) => _cartLines.Any(x => x.Product.Id == product.Id);
+
         public IEnumerable<CartLine> Lines => _cartLines;
     }
 

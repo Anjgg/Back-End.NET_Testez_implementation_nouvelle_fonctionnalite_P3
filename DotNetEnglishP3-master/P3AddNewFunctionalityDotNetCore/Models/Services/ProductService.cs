@@ -8,7 +8,9 @@ using Microsoft.Extensions.Localization;
 using P3.Models.Entities;
 using P3.Models.Repositories;
 using P3.Models.ViewModels;
+using P3.Models;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.CodeAnalysis;
 
 namespace P3.Models.Services
 {
@@ -122,11 +124,11 @@ namespace P3.Models.Services
 
         public void DeleteProduct(int id)
         {
-            // TODO what happens if a product has been added to a cart and has been later removed from the inventory ?
-            // delete the product form the cart by using the specific method
-            // => the choice is up to the student
-            _cart.RemoveLine(GetProductById(id));
-
+            var productToDelete = GetProductById(id);
+            if (_cart != null && _cart.HasThisProduct(productToDelete))
+            {
+                _cart.RemoveLine(productToDelete);
+            }
             _productRepository.DeleteProduct(id);
         }
     }

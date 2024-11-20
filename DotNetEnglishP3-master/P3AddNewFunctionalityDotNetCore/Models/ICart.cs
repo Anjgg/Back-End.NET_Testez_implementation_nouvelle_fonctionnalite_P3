@@ -14,5 +14,7 @@ namespace P3.Models
         double GetTotalValue();
 
         double GetAverageValue();
+
+        public bool HasThisProduct(Product product);
     }
 }
