@@ -197,8 +197,8 @@ namespace P3.Tests
         {
             // Arrange
 
-            var product1 = CreateProductViewModel(index : "1");
-            var product2 = CreateProductViewModel(index : "2");
+            var product1 = CreateProductViewModel(variant : "1");
+            var product2 = CreateProductViewModel(variant : "2");
             var context = CreateTestDb();
             
             _productService.SaveProduct(product1);
@@ -217,13 +217,13 @@ namespace P3.Tests
             Assert.Equal(21.11, savedProduct.Price);
         }
 
-        private ProductViewModel CreateProductViewModel(string name = "TestProductName", string stock = "1", string price = "1,11", string index = null)
+        private ProductViewModel CreateProductViewModel(string name = "TestProductName", string stock = "1", string price = "1,11", string variant = null)
         {
             return new ProductViewModel
             {
-                Name = $"{index}{name}",
-                Stock = $"{index}{stock}",
-                Price = $"{index}{price}",
+                Name = $"{name}{variant}",
+                Stock = $"{variant}{stock}",
+                Price = $"{variant}{price}",
             };
         }
 
