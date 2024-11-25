@@ -19,7 +19,7 @@ namespace P3.Models.ViewModels
 
         [Required(ErrorMessageResourceName = "MissingStock", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
         [RegularExpression(@"^[-]?\d*$", ErrorMessageResourceName = "StockNotAnInteger", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
-        [Range(1,1000000,ErrorMessageResourceName = "StockNotGreaterThanZero", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
+        [Range(1,int.MaxValue,ErrorMessageResourceName = "StockNotGreaterThanZero", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
         public string Stock { get; set; }
 
 
