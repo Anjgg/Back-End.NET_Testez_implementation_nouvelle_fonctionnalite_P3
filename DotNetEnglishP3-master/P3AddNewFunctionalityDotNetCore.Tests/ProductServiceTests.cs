@@ -212,7 +212,7 @@ namespace P3.Tests
             Assert.Single(savedProductList);
 
             var savedProduct = await context.Product.SingleOrDefaultAsync(p => p.Id == 2);
-            Assert.Equal("2TestProductName", savedProduct.Name);
+            Assert.Equal("TestProductName2", savedProduct.Name);
             Assert.Equal(21, savedProduct.Quantity);
             Assert.Equal(21.11, savedProduct.Price);
         }
