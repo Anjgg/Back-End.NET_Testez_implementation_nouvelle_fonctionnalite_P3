@@ -19,13 +19,13 @@ namespace P3.Models.ViewModels
 
         [Required(ErrorMessageResourceName = "MissingStock", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
         [RegularExpression(@"^[-]?\d*$", ErrorMessageResourceName = "StockNotAnInteger", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
-        [Range(1,int.MaxValue,ErrorMessageResourceName = "StockNotGreaterThanZero", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
+        [Range(1,int.MaxValue, ErrorMessageResourceName = "StockNotGreaterThanZero", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
         public string Stock { get; set; }
 
 
         [Required(ErrorMessageResourceName = "MissingPrice", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
         [RegularExpression(@"^[-]?\d*([,]\d{1,2})?$", ErrorMessageResourceName = "PriceNotANumber", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
-        [Range(0.01, 1000000.00, ErrorMessageResourceName = "PriceNotGreaterThanZero", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
+        [Range(0.01, double.MaxValue, ErrorMessageResourceName = "PriceNotGreaterThanZero", ErrorMessageResourceType = (typeof(Resources.Models.Services.ProductService)))]
         public string Price { get; set; }
     }
 }
